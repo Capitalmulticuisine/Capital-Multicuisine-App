@@ -1,11 +1,11 @@
-/* ====== CONFIG - replace these placeholders with your Firebase web config ====== */
+x/* ====== CONFIG - replace these placeholders with your Firebase web config ====== */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyDisrvCAebT1irQP9HTFBVXkJ_16uRw_yE",
+  authDomain: "capital-multicuisine-app.firebaseapp.com",
+  projectId: "capital-multicuisine-app",
+  storageBucket: "capital-multicuisine-app.appspot.com",   // or use the exact value shown in your console
+  messagingSenderId: "730998608543",
+  appId: "1:730998608543:web:71a3ea4891366d998f88aa"
 };
 /* ========================================================= */
 
