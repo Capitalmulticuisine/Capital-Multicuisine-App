@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Capital Multi Cuisine Restaurant — Order</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Capital Multi Cuisine Restaurant</div>
+    <button id="openCartBtn" class="cartBtn">Cart (<span id="cartCount">0</span>)</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="/hero.jpg" alt="Capital Multi Cuisine" id="heroImg">
+      <div class="hero-overlay">
+        <h1>Capital Multi Cuisine</h1>
+        <p>Delicious multi-cuisine dishes — order, party & bulk bookings.</p>
+      </div>
+    </section>
+
+    <section class="banners" id="banners"></section>
+
+    <nav class="categories" id="categoryTabs"></nav>
+
+    <section id="menu" class="menu-grid"></section>
+  </main>
+
+  <aside id="cartPanel" class="cart-panel hidden">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+      <div>Total: ₹<span id="cartTotal">0</span></div>
+      <button id="checkoutBtn" class="primary">Checkout</button>
+    </div>
+    <button id="closeCart">Close</button>
+  </aside>
+
+  <div id="checkoutModal" class="modal hidden">
+    <div class="modal-box">
+      <h3>Checkout</h3>
+      <input id="custName" placeholder="Name" />
+      <input id="custPhone" placeholder="Phone" />
+      <textarea id="custAddr" placeholder="Address (for delivery)"></textarea>
+
+      <!-- Branch selector injected by JS -->
+      <label>Payment
+        <select id="paymentMethod"><option>Cash on Delivery</option><option>UPI (scan QR)</option></select>
+      </label>
+      <input id="coupon" placeholder="Coupon code (if any)" />
+      <div style="margin-top:8px;">
+        <button id="placeOrder" class="primary">Place Order</button>
+        <button id="cancelCheckout">Cancel</button>
+      </div>
+      <div id="checkoutMsg" class="info"></div>
+    </div>
+  </div>
+
+  <!-- Firebase (compat for simplicity) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Admin — Capital Multi Cuisine</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <h2>Admin — Orders</h2>
+  <div id="loginBox">
+    <input id="admPwd" placeholder="Admin password" />
+    <button id="admLogin">Login</button>
+    <div id="admMsg"></div>
+  </div>
+  <div id="ordersWrap" class="hidden">
+    <button id="logout">Logout</button>
+    <div id="ordersList"></div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const ADMIN_PWD = 'capitaladmin'; // change this before using
+    document.getElementById('admLogin').addEventListener('click', ()=>{
+      const v = document.getElementById('admPwd').value;
+      if(v===ADMIN_PWD){ document.getElementById('loginBox').classList.add('hidden'); document.getElementById('ordersWrap').classList.remove('hidden'); renderBranchFilterAndOrders(); }
+      else document.getElementById('admMsg').textContent = 'Wrong password';
+    });
+    document.getElementById('logout').addEventListener('click', ()=> location.reload());
+
+    async function renderBranchFilterAndOrders(){
+      const branchesSnap = await db.collection('branches').get();
+      const branches = branchesSnap.docs.map(d=>({id:d.id, ...d.data()}));
+      const wrap = document.getElementById('ordersWrap');
+      const filterDiv = document.createElement('div');
+      filterDiv.innerHTML = `<label>Filter branch:
+        <select id="adminBranchFilter"><option value="all">All</option>
+          ${branches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('')}
+        </select>
+        <button id="refreshOrders">Refresh</button>
+      </label>`;
+      wrap.insertBefore(filterDiv, wrap.firstChild);
+      document.getElementById('refreshOrders').addEventListener('click', ()=> loadOrders());
+      loadOrders();
+    }
+
+    function loadOrders(){
+      const selected = document.getElementById('adminBranchFilter')?.value || 'all';
+      let q = db.collection('orders').orderBy('createdAt','desc');
+      if(selected !== 'all') q = q.where('branchId','==', selected);
+      q.onSnapshot(snap=>{
+        const list = document.getElementById('ordersList'); list.innerHTML='';
+        snap.forEach(doc=>{
+          const o = doc.data();
+          const div = document.createElement('div');
+          div.style.border='1px solid #eee'; div.style.padding='8px'; div.style.marginBottom='8px';
+          div.innerHTML = `<strong>${doc.id}</strong> <div><strong>${o.branchName || '—'}</strong> | ${o.customer?.name||''} | ${o.payment} | ₹${o.total} | <em>${o.status}</em></div>
+            <div>${o.items.map(it=>`${it.name} x${it.qty}`).join(', ')}</div>
+            <div style="margin-top:6px">
+              <button data-id="${doc.id}" data-status="preparing">Preparing</button>
+              <button data-id="${doc.id}" data-status="ready">Ready</button>
+              <button data-id="${doc.id}" data-status="completed">Completed</button>
+            </div>`;
+          list.appendChild(div);
+        });
+        document.querySelectorAll('button[data-status]').forEach(b=>b.addEventListener('click', async (e)=>{
+          const id = e.target.dataset.id, st = e.target.dataset.status;
+          await db.collection('orders').doc(id).update({status:st});
+          alert('Updated ' + id + ' → ' + st);
+        }));
+      });
+    }
+  </script>
+</body>
+</html>
