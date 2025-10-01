@@ -1,4 +1,4 @@
-x/* ====== CONFIG - replace these placeholders with your Firebase web config ====== */
+/* ====== CONFIG - replace these placeholders with your Firebase web config ====== */
 const firebaseConfig = {
   apiKey: "AIzaSyDisrvCAebT1irQP9HTFBVXkJ_16uRw_yE",
   authDomain: "capital-multicuisine-app.firebaseapp.com",
