@@ -14,11 +14,11 @@ const db = firebase.firestore();
 
 // Sample menu fallback (will use Firestore 'menu' if present)
 const SAMPLE_MENU = [
-  {id:'b1', name:'Veg Biryani', price:249, img:'/item1.jpg', category:'Biryani', desc:'Fragrant veg biryani.'},
-  {id:'b2', name:'Chicken Biryani', price:349, img:'/item2.jpg', category:'Biryani', desc:'Classic chicken biryani.'},
-  {id:'k1', name:'Seekh Kebab (4 pcs)', price:249, img:'/item3.jpg', category:'Kebabs', desc:'Juicy kebabs.'},
-  {id:'c1', name:'Family Combo', price:899, img:'/combo1.jpg', category:'Combos', desc:'Feeds 4-5.'},
-  {id:'s1', name:'Naan (2 pcs)', price:49, img:'/item4.jpg', category:'Sides', desc:'Fresh naan.'}
+  {id:'b1', name:'Veg Biryani', price:249, img:'item1.jpg', category:'Biryani', desc:'Fragrant veg biryani.'},
+  {id:'b2', name:'Chicken Biryani', price:349, img:'item2.jpg', category:'Biryani', desc:'Classic chicken biryani.'},
+  {id:'k1', name:'Seekh Kebab (4 pcs)', price:249, img:'item3.jpg', category:'Kebabs', desc:'Juicy kebabs.'},
+  {id:'c1', name:'Family Combo', price:899, img:'combo1.jpg', category:'Combos', desc:'Feeds 4-5.'},
+  {id:'s1', name:'Naan (2 pcs)', price:49, img:'item4.jpg', category:'Sides', desc:'Fresh naan.'}
 ];
 
 let MENU = [];
@@ -108,7 +108,7 @@ function renderMenu(list){
   list.forEach(item=>{
     const c = document.createElement('div'); c.className='card';
     c.innerHTML = `
-      <img src="${item.img||'/placeholder.jpg'}" alt="${item.name}">
+      <img src="${item.img||'placeholder.jpg'}" alt="${item.name}">
       <div class="meta">
         <h4>${item.name}</h4>
         <div class="desc">${item.desc||''}</div>
